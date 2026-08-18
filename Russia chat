@@ -1,0 +1,15 @@
+-- ServerScriptService > Script
+
+local TextChatService = game:GetService("TextChatService")
+
+local function containsCyrillic(text)
+ return text:match("[\u0400-\u04FF]") ~= nil
+end
+
+TextChatService.OnIncomingMessage = function(message)
+ if message.Text and containsCyrillic(message.Text) then
+  local properties = Instance.new("TextChatMessageProperties")
+  properties.Text = "[Message blocked]"
+  return properties
+ end
+end
